@@ -1,0 +1,2 @@
+# CodingPatternsProjectRevamp
+ Old->New
