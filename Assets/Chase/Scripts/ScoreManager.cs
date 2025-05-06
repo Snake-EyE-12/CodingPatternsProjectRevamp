@@ -51,7 +51,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.GetActiveSceneName().Equals("GameOver"))
+        if (GameManager.instance.GetActiveSceneName().Equals("GameOver"))
         {
             if (amBestScore)
             {
