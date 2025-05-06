@@ -9,11 +9,43 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
-        instance = this;
+    }
+
+    
+    
+    
+    
+    
+    
+    public GameManager GetInstance()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+
+        return instance;
     }
 
     public static GameManager instance;
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public void SwitchScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
