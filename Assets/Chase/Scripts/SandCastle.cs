@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SandCastle : BeachObject, IKickable
+public class SandCastle : BeachObject, IKickable, IListener
 {
     [SerializeField] private float size;
     public GameObject kickAnim;
@@ -42,6 +43,12 @@ public class SandCastle : BeachObject, IKickable
         return false;
         
     }
+
+    private void Awake()
+    {
+        scoreKeeper.observer.Attach(this);
+    }
+
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.CompareTag("Water")) {
             //Debug.Log("Hit Water");
@@ -49,4 +56,8 @@ public class SandCastle : BeachObject, IKickable
         }
     }
 
+    public void OnNotify(INotifierData data)
+    {
+        Debug.Log("New Score: " + data.Value);
+    }
 }
