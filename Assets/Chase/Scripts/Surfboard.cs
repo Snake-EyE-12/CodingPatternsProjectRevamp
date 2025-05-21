@@ -2,16 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public class SurfBoardFlyweightData : ScriptableObject
+{
+    public float powerModifier;
+    public float time;
+    public float offset;
+}
 public class Surfboard : BeachObject, IKickable
 {
     [SerializeField] private List<Sprite> spriteVariations = new List<Sprite>();
-    [SerializeField] private float powerModifier;
-    [SerializeField] private float time;
-    [SerializeField] private float offset;
+    [SerializeField] private SurfBoardFlyweightData data;
     public bool OnKicked(Player player) {
         if(state == ObjectState.Complete) {
             state = ObjectState.Moving;
-            StartCoroutine(KickTo(player, time));
+            StartCoroutine(KickTo(player, data.time));
             //playAudio();
             return true;
         }
@@ -31,7 +36,7 @@ public class Surfboard : BeachObject, IKickable
         playAudio();
         float elapsedTime = 0;
         Vector2 startPos = transform.position;
-        Vector2 endPos = (Vector2)player.transform.position + (player.rb.velocity.normalized * ((player.rb.velocity.magnitude * powerModifier)));
+        Vector2 endPos = (Vector2)player.transform.position + (player.rb.velocity.normalized * ((player.rb.velocity.magnitude * data.powerModifier)));
         while(elapsedTime < time) {
             elapsedTime += Time.deltaTime;
             transform.position = Vector2.Lerp(startPos, endPos, elapsedTime/time);
@@ -53,7 +58,7 @@ public class Surfboard : BeachObject, IKickable
     }
     private void OnDrawGizmos() {
         Gizmos.color = Color.black;
-        Gizmos.DrawRay(transform.position, new Vector2(0, -offset));
+        Gizmos.DrawRay(transform.position, new Vector2(0, -data.offset));
     }
 }
 
